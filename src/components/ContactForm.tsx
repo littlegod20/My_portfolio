@@ -1,32 +1,60 @@
 import { type FormEvent, useState } from 'react'
 import { profile } from '../data/profile'
 
-/** Set `VITE_CONTACT_FORM_URL` in `.env` to your Formspree form URL. */
-const formUrl = import.meta.env.VITE_CONTACT_FORM_URL
+const formspreeUrl = import.meta.env.VITE_CONTACT_FORM_URL
+const web3AccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+
+const formConfigured = Boolean(formspreeUrl || web3AccessKey)
 
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (!formUrl) {
+    if (!formConfigured) {
       setStatus('error')
       return
     }
+
     const form = e.currentTarget
     const fd = new FormData(form)
+    const name = String(fd.get('name') ?? '')
     const email = String(fd.get('email') ?? '')
-    fd.append('_replyto', email)
-    fd.append('_subject', `Portfolio · ${profile.name}`)
+    const message = String(fd.get('message') ?? '')
 
     setStatus('loading')
     try {
-      const res = await fetch(formUrl, {
-        method: 'POST',
-        body: fd,
-        headers: { Accept: 'application/json' },
-      })
-      if (!res.ok) throw new Error('Request failed')
+      if (formspreeUrl) {
+        const post = new FormData()
+        post.append('name', name)
+        post.append('email', email)
+        post.append('message', message)
+        post.append('_replyto', email)
+        post.append('_subject', `Portfolio · ${profile.name}`)
+
+        const res = await fetch(formspreeUrl, {
+          method: 'POST',
+          body: post,
+          headers: { Accept: 'application/json' },
+        })
+        if (!res.ok) throw new Error('Request failed')
+      } else if (web3AccessKey) {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: web3AccessKey,
+            name,
+            email,
+            message,
+            subject: `Portfolio · ${profile.name}`,
+            from_name: name,
+          }),
+        })
+        const data = (await res.json()) as { success?: boolean; message?: string }
+        if (!res.ok || !data.success) throw new Error(data.message ?? 'Request failed')
+      }
+
       setStatus('success')
       form.reset()
     } catch {
@@ -34,14 +62,18 @@ export function ContactForm() {
     }
   }
 
-  const disabled = status === 'loading' || !formUrl
+  const disabled = status === 'loading' || !formConfigured
 
   return (
     <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6 md:p-8">
-      {!formUrl ? (
+      {!formConfigured ? (
         <p className="mb-4 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
-          Add <code className="rounded bg-black/30 px-1.5 py-0.5">VITE_CONTACT_FORM_URL</code> to your{' '}
-          <code className="rounded bg-black/30 px-1.5 py-0.5">.env</code> (e.g. Formspree endpoint) to enable this form.
+          Configure the contact form: copy{' '}
+          <code className="rounded bg-black/30 px-1.5 py-0.5">.env.example</code> to{' '}
+          <code className="rounded bg-black/30 px-1.5 py-0.5">.env</code> and set{' '}
+          <code className="rounded bg-black/30 px-1.5 py-0.5">VITE_WEB3FORMS_ACCESS_KEY</code> or{' '}
+          <code className="rounded bg-black/30 px-1.5 py-0.5">VITE_CONTACT_FORM_URL</code>, then restart
+          the dev server.
         </p>
       ) : null}
 
@@ -71,7 +103,7 @@ export function ContactForm() {
             required
             autoComplete="email"
             className="mt-1.5 w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3 text-[var(--color-text-heading)] placeholder:text-[var(--color-text)]/60 focus:border-[var(--color-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/30"
-            placeholder="you@example.com"
+            placeholder={profile.email}
           />
         </div>
         <div>
@@ -101,7 +133,7 @@ export function ContactForm() {
           Thanks — your message is on its way.
         </p>
       ) : null}
-      {status === 'error' && formUrl ? (
+      {status === 'error' && formConfigured ? (
         <p className="mt-4 text-sm text-red-400" role="alert">
           Something went wrong. Try again or use the email link below.
         </p>
