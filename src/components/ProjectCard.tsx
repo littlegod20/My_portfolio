@@ -15,8 +15,9 @@ export function ProjectCard({ project, index, compact = false }: Props) {
   const baseArticle =
     'group flex h-full flex-col rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition-colors hover:border-[var(--color-accent)]/40'
 
+  /** Three cards + two gap-4 gaps fit the carousel container; mobile uses one comfortable column. */
   const layoutClass = compact
-    ? 'w-[min(100vw-3rem,280px)] max-w-[280px] shrink-0 snap-start p-4 md:p-5'
+    ? 'w-[min(100vw-2.5rem,320px)] shrink-0 snap-start p-4 sm:p-5 md:w-[calc((100cqw-2rem)/3)] md:min-w-0 md:max-w-none'
     : 'p-6 md:p-8'
 
   const hoverLift = reduceMotion

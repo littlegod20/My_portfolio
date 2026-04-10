@@ -14,7 +14,7 @@ export function Projects() {
         </p>
       ) : reduceMotion ? (
         <div
-          className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-visible px-5 pb-2 md:-mx-8 md:px-8"
+          className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-visible px-5 pb-2 [container-type:inline-size] md:-mx-8 md:px-8"
           role="list"
           aria-label="Projects"
         >
@@ -23,7 +23,7 @@ export function Projects() {
           ))}
         </div>
       ) : (
-        <div className="-mx-5 overflow-hidden pl-5 pr-5 md:-mx-8 md:pl-8 md:pr-8">
+        <div className="-mx-5 w-full max-w-full overflow-hidden pl-5 pr-5 [container-type:inline-size] md:-mx-8 md:pl-8 md:pr-8">
           <div
             className="animate-projects-marquee flex w-max gap-4 will-change-transform"
             role="list"
