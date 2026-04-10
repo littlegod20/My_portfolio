@@ -57,29 +57,3 @@
   }
 }
 
-@keyframes projects-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.animate-projects-marquee {
-  animation: projects-marquee 50s linear infinite;
-}
-
-.animate-projects-marquee:hover {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-projects-marquee {
-    animation: none;
-  }
-
-  .animate-projects-marquee:hover {
-    animation-play-state: running;
-  }
-}

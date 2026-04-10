@@ -44,7 +44,11 @@ export function ProjectCard({ project, index, compact = false }: Props) {
       }
 
   return (
-    <motion.article className={`${baseArticle} ${layoutClass}`} {...scrollMotion}>
+    <motion.article
+      className={`${baseArticle} ${layoutClass}`}
+      {...scrollMotion}
+      {...(compact ? { 'data-project-card': 'true' } : {})}
+    >
       {project.imageSrc ? (
         <div
           className={`overflow-hidden rounded-xl border border-[var(--color-border)] ${compact ? 'mb-3' : 'mb-4'}`}
