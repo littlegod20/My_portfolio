@@ -87,7 +87,7 @@ function HeroPortrait({ reduceMotion }: { reduceMotion: boolean | null }) {
       transition={reduceMotion ? { duration: 0 } : { ...defaultTransition, delay: 0.12 }}
     >
       <div
-        className="relative aspect-square overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-muted)] shadow-2xl shadow-black/20"
+        className="relative aspect-square overflow-hidden rounded-full border border-[var(--color-border)] bg-[var(--color-bg-muted)] shadow-2xl shadow-black/20"
         style={{
           boxShadow:
             '0 0 0 1px rgba(45, 212, 191, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.5)',
@@ -103,7 +103,7 @@ function HeroPortrait({ reduceMotion }: { reduceMotion: boolean | null }) {
         />
       </div>
       <div
-        className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] opacity-60 blur-3xl"
+        className="pointer-events-none absolute -inset-4 -z-10 rounded-full opacity-60 blur-3xl"
         style={{
           background:
             'radial-gradient(circle at 30% 30%, rgba(45, 212, 191, 0.25), transparent 55%)',
