@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import navAvatar from '../assets/theo_futuristic.jpg'
+import navAvatar from '../assets/theo.jpg'
 import { profile } from '../data/profile'
 
 const nav = [

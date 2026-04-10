@@ -1,4 +1,4 @@
-import heroPhoto from '../assets/theo.jpg'
+import heroPhoto from '../assets/theo_futuristic.jpg'
 
 export const profile = {
   name: 'Theophilus Asante Frimpong',
