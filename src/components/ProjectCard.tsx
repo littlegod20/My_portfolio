@@ -11,6 +11,7 @@ type Props = {
 
 export function ProjectCard({ project, index, compact = false }: Props) {
   const reduceMotion = useReducedMotion()
+  const primaryHref = project.links[0]?.href
 
   const baseArticle =
     'group flex h-full flex-col rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition-colors hover:border-[var(--color-accent)]/40'
@@ -43,19 +44,23 @@ export function ProjectCard({ project, index, compact = false }: Props) {
         whileHover: hoverLift,
       }
 
-  return (
-    <motion.article
-      className={`${baseArticle} ${layoutClass}`}
-      {...scrollMotion}
-      {...(compact ? { 'data-project-card': 'true' } : {})}
-    >
+  const interactive =
+    primaryHref != null &&
+    'cursor-pointer no-underline outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]'
+
+  const rootClass = [baseArticle, layoutClass, interactive].filter(Boolean).join(' ')
+
+  const dataAttrs = compact ? { 'data-project-card': 'true' as const } : {}
+
+  const body = (
+    <>
       {project.imageSrc ? (
         <div
           className={`overflow-hidden rounded-xl border border-[var(--color-border)] ${compact ? 'mb-3' : 'mb-4'}`}
         >
           <img
             src={project.imageSrc}
-            alt={`${project.title} preview`}
+            alt=""
             loading="lazy"
             decoding="async"
             className={`w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100 ${compact ? 'aspect-[4/3]' : 'aspect-video'}`}
@@ -83,19 +88,28 @@ export function ProjectCard({ project, index, compact = false }: Props) {
           </li>
         ))}
       </ul>
-      <div className={`flex flex-wrap gap-3 ${compact ? 'mt-4' : 'mt-6'}`}>
-        {project.links.map((link) => (
-          <a
-            key={link.href + link.label}
-            href={link.href}
-            target="_blank"
-            rel="noreferrer noopener"
-            className={`font-semibold text-[var(--color-accent)] underline-offset-4 transition-colors hover:underline ${compact ? 'text-xs' : 'text-sm'}`}
-          >
-            {link.label} →
-          </a>
-        ))}
-      </div>
+    </>
+  )
+
+  if (primaryHref) {
+    return (
+      <motion.a
+        href={primaryHref}
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label={`${project.title} — open live site in a new tab`}
+        className={rootClass}
+        {...scrollMotion}
+        {...dataAttrs}
+      >
+        {body}
+      </motion.a>
+    )
+  }
+
+  return (
+    <motion.article className={rootClass} {...scrollMotion} {...dataAttrs}>
+      {body}
     </motion.article>
   )
 }
