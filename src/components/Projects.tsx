@@ -95,7 +95,7 @@ export function Projects() {
 
             <div
               ref={scrollRef}
-              className="flex min-w-0 flex-1 snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-visible pb-2 [container-type:inline-size] [scrollbar-gutter:stable] overscroll-x-contain scroll-smooth touch-pan-x [-webkit-overflow-scrolling:touch]"
+              className="flex min-w-0 flex-1 snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-visible pb-2 [container-type:inline-size] overscroll-x-contain scroll-smooth touch-pan-x [-webkit-overflow-scrolling:touch] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               role="list"
               aria-label="Projects"
             >
