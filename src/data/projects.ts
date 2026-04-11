@@ -14,6 +14,20 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'Timesheet',
+    description:
+      'Web app to log hours, review entries, and keep time tracking clear—built for quick capture and a calm, readable overview.',
+    tags: ['React', 'TypeScript', 'Vite'],
+    links: [
+      {
+        label: 'Live',
+        href: 'https://timesheet-webapp-client.vercel.app/',
+      },
+    ],
+    imageSrc:
+      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
     title: 'Kobi Commerce',
     description:
       'E-commerce storefront with product browsing, cart flow, and a polished shopping experience built for the web.',
