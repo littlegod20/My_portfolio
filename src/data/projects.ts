@@ -14,6 +14,20 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'WatchTube',
+    description:
+      'YouTube clone with video browsing, watch pages, and a familiar streaming-style layout focused on discovery and playback.',
+    tags: ['React', 'TypeScript', 'Vite'],
+    links: [
+      {
+        label: 'Live',
+        href: 'https://watch-tube-client.vercel.app/',
+      },
+    ],
+    imageSrc:
+      'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
     title: 'Timesheet',
     description:
       'Web app to log hours, review entries, and keep time tracking clear—built for quick capture and a calm, readable overview.',
