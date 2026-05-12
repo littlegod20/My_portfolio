@@ -14,6 +14,15 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'Tuaka',
+    description:
+      'Multi-tenant invoice and quote SaaS for African businesses, with MoMo/card payments and a React + Laravel stack.',
+    tags: ['React', 'Laravel', 'SaaS'],
+    links: [{ label: 'Live', href: 'https://www.tuaka.org/' }],
+    imageSrc:
+      'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
+  },
+  {
     title: 'WatchTube',
     description:
       'YouTube clone with video browsing, watch pages, and a familiar streaming-style layout focused on discovery and playback.',
